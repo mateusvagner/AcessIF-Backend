@@ -15,10 +15,10 @@ class Summarizer(SummarizerInterface):
         docs = text_splitter.create_documents([text])
 
         template = f'''
-        Please provide a summary of the given text in {language}, including all key points and supporting details. 
-        The summary should be comprehensive and accurately reflect the main message and arguments presented in the original text, while also being concise and easy to understand.
-        Provide the summary in bullet points, covering the key points. 
-        Also create a small and appropriate title for the text at the begin (do not include the word "Title").
+        Create a small and appropriate title for the transcription text.
+        And then please provide a summary in bullet points of the given transcription text in {language}. 
+        The summary must be comprehensive and accurately reflect the main message and arguments presented in the original text, while also being concise and easy to understand.
+        
         Text: '{{text}}'
         '''
 
