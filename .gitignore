@@ -6,6 +6,7 @@ __pycache__/
 venv/
 project_env/
 instance/
+file/
 
 # Ignore environment variable or config files
 .env

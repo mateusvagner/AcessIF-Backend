@@ -17,7 +17,7 @@ You will also need the following packages and tools installed on your system:
 
 #### 1. Update Package List
 
-To ensure your system is using the latest package versions, run the following command to update the package list:\
+To ensure your system is using the latest package versions, run the following command to update the package list:
 ```
 sudo apt update
 ```
@@ -67,7 +67,74 @@ pip install -r requirements.txt
 ```
 This command will read the requirements.txt file and install the necessary Python packages to run the project.
 
-### Additional Notes
+# Project Setup and Installation Guide (MacOS)
+This guide will help you set up and run the project on a MacOS machine. Follow the steps below to install the required dependencies and configure the environment.
+
+### Prerequisites
+Before proceeding, make sure your system meets the following requirements:
+- **Operating System**: macOS 11 Big Sur or later
+- **Python Version**: Python 3.x
+- **Package Manager**: pip (Python's package manager)
+
+You will also need the following packages and tools installed on your system:
+
+- **FFmpeg**: Required for audio processing.
+- **Ollama**: A tool used for pulling Llama models.
+
+### Step-by-Step Installation Instructions
+
+#### 1. Install HomeBrew
+```commandline
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+#### 2. Install Python 3
+```
+brew install python3
+```
+
+#### 3. Install FFmpeg
+```
+brew install ffmpeg
+```
+
+#### 4. Install Ollama and Pull Phi3
+
+Download the zip from [Ollama MacOS website](https://ollama.com/download/mac). Next, add Ollama app into the application and open it to install the command line.
+
+Alternatively install Ollama using Home Brew:
+
+```commandline
+brew install ollama
+```
+
+Next, use Ollama to pull the required Phi3 model:
+```
+ollama pull phi3
+```
+#### 5. Create a Virtual Environment
+It's recommended to create a virtual environment to isolate the project dependencies. You can do this by running:
+```
+python3 -m venv venv
+```
+This command will create a directory named venv in your project folder, containing the virtual environment.
+
+#### 6. Activate the Virtual Environment
+Once the virtual environment is created, activate it using the following command:
+```
+source venv/bin/activate
+```
+You should see the virtual environment name (venv) in your terminal prompt, indicating that it's active.
+
+#### 7. Install Project Dependencies
+With the virtual environment activated, install the project dependencies using pip:
+```
+pip install -r requirements-mac.txt
+```
+This command will read the requirements.txt file and install the necessary Python packages to run the project.
+
+
+## Additional Notes
 
 1. **Virtual Environment Management**: If you ever need to deactivate the virtual environment, simply run the following command:
 ```
