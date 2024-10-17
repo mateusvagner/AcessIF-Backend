@@ -22,6 +22,24 @@ get_audio_use_case = GetAudioUseCase(file_service=FileService())
 delete_transcription_use_case = DeleteTranscriptionUseCase(db_service=DbService(), file_service=FileService())
 
 
+@data_bp.route('/user', methods=['GET'])
+@jwt_required()
+def get_user():
+    current_user_email = get_jwt_identity()
+    user: User = User.query.filter_by(email=current_user_email).first()
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    return jsonify(
+        {
+            'id': user.id,
+            'name': user.name,
+            'email': user.email,
+        }
+    ), 200
+
+
 @data_bp.route('/transcriptions', methods=['GET'])
 @jwt_required()
 def get_all_transcriptions():
