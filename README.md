@@ -67,6 +67,19 @@ pip install -r requirements.txt
 ```
 This command will read the requirements.txt file and install the necessary Python packages to run the project.
 
+#### 8. Environment Variables 
+The project requires environment variable `JWT_SECRET_KEY`.
+Store it in a `.env` file and load them securely.
+
+To get a secret key run the following code in the terminal:
+```
+python -c 'import secrets; print(secrets.token_hex())'
+```
+Copy the value and paste into the `.env` file:
+```
+JWT_SECRET_KEY=new-secret-key-abc-123
+```
+
 # Project Setup and Installation Guide (MacOS)
 This guide will help you set up and run the project on a MacOS machine. Follow the steps below to install the required dependencies and configure the environment.
 
@@ -133,7 +146,18 @@ pip install -r requirements-mac.txt
 ```
 This command will read the requirements.txt file and install the necessary Python packages to run the project.
 
+#### 8. Environment Variables 
+The project requires environment variable `JWT_SECRET_KEY`.
+Store it in a `.env` file and load them securely.
 
+To get a secret key run the following code in the terminal:
+```
+python -c 'import secrets; print(secrets.token_hex())'
+```
+Copy the value and paste into the `.env` file:
+```
+JWT_SECRET_KEY=new-secret-key-abc-123
+```
 ## Additional Notes
 
 1. **Virtual Environment Management**: If you ever need to deactivate the virtual environment, simply run the following command:
@@ -144,9 +168,7 @@ This will return you to the system's default Python environment.
 
 2. **Dependency Installation**: Ensure that you install all dependencies while the virtual environment is active to avoid conflicts with the global Python environment.
 
-3. **Environment Variables**: If your project requires environment variables (e.g., `JWT_SECRET_KEY`), store them in a `.env` file and load them securely.
-
-4. **Git Setup**: Remember to exclude the venv folder from version control by adding it to your `.gitignore` file. This ensures that the virtual environment remains local to your machine and doesn't get uploaded to GitHub.
+3. **Git Setup**: Remember to exclude the venv folder from version control by adding it to your `.gitignore` file. This ensures that the virtual environment remains local to your machine and doesn't get uploaded to GitHub.
 
 ### Running the Project
 After completing the setup steps, you should be ready to run the project. Make sure the virtual environment is activated before running any Python scripts:
