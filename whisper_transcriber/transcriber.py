@@ -10,7 +10,7 @@ class Transcriber(TranscriberInterface):
     def transcribe(self, file: bytes) -> WhisperTranscription:
         file_handler = FileHandler(file=file)
 
-        model = whisper.load_model('tiny')
+        model = whisper.load_model('base')
         result = model.transcribe(file_handler.temp_file_path)
 
         file_handler.remove_temp_file()
