@@ -62,7 +62,7 @@ def get_all_transcriptions():
             'language': transcription.language,
             'segments': json.loads(transcription.segments),
             'created_at': transcription.created_at.isoformat() + 'Z' if transcription.created_at else None,
-            'isFavorite': transcription.isFavorite,
+            'is_favorite': transcription.is_favorite,
             'summary': {
                 'transcription_id': transcription.summary.transcription_id,
                 'id': transcription.summary.id,
@@ -94,7 +94,7 @@ def get_last_transcriptions():
             'language': transcription.language,
             'segments': json.loads(transcription.segments),
             'created_at': transcription.created_at.isoformat() + 'Z' if transcription.created_at else None,
-            'isFavorite': transcription.isFavorite,
+            'is_favorite': transcription.is_favorite,
             'summary': {
                 'transcription_id': transcription.summary.transcription_id,
                 'id': transcription.summary.id,
@@ -126,7 +126,7 @@ def get_transcriptions_by_id(transcription_id):
             'language': transcription.language,
             'segments': json.loads(transcription.segments),
             'created_at': transcription.created_at.isoformat() + 'Z' if transcription.created_at else None,
-            'isFavorite': transcription.isFavorite,
+            'is_favorite': transcription.is_favorite,
             'summary': {
                 'transcription_id': transcription.summary.transcription_id,
                 'id': transcription.summary.id,
@@ -163,7 +163,7 @@ def update_transcription_name(transcription_id):
             'language': updated_transcription.language,
             'segments': json.loads(updated_transcription.segments),
             'created_at': updated_transcription.created_at.isoformat() + 'Z' if updated_transcription.created_at else None,
-            'isFavorite': updated_transcription.isFavorite,
+            'is_favorite': updated_transcription.is_favorite,
             'summary': {
                 'transcription_id': updated_transcription.summary.transcription_id,
                 'id': updated_transcription.summary.id,
@@ -210,7 +210,7 @@ def favorite_transcription(transcription_id):
             'language': updated_transcription.language,
             'segments': json.loads(updated_transcription.segments),
             'created_at': updated_transcription.created_at.isoformat() + 'Z' if updated_transcription.created_at else None,
-            'isFavorite': updated_transcription.isFavorite,
+            'is_favorite': updated_transcription.is_favorite,
             'summary': {
                 'transcription_id': updated_transcription.summary.transcription_id,
                 'id': updated_transcription.summary.id,

@@ -25,7 +25,7 @@ class AudioTranscription(db.Model):
                               cascade="all, delete",
                               overlaps="summaries")
 
-    isFavorite = db.Column(db.Boolean, default=False)
+    is_favorite = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f'<AudioTranscription {self.id} for AudioFile {self.audio_id}>'
