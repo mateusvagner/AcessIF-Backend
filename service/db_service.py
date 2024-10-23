@@ -41,3 +41,11 @@ class DbService:
             return transcription
 
         return None
+
+    def get_transcription(self, transcription_id) -> AudioTranscription:
+        return AudioTranscription.query.get(transcription_id)
+
+    def update_transcription(self, transcription) -> AudioTranscription:
+        db.session.add(transcription)
+        db.session.commit()
+        return transcription

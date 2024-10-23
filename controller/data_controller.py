@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from database.model.user import User
 from domain.use_case.delete_transcription_use_case import DeleteTranscriptionUseCase
+from domain.use_case.favorite_transcription_use_case import FavoriteTranscriptionUseCase
 from domain.use_case.get_all_transcriptions_use_case import GetAllTranscriptionsUseCase
 from domain.use_case.get_audio_use_case import GetAudioUseCase
 from domain.use_case.get_transcription_by_id_use_case import GetTranscriptionByIdUseCase
@@ -20,6 +21,7 @@ get_transcriptions_by_id_use_case = GetTranscriptionByIdUseCase()
 update_transcription_name_use_case = UpdateTranscriptionNameUseCase(db_service=DbService())
 get_audio_use_case = GetAudioUseCase(file_service=FileService())
 delete_transcription_use_case = DeleteTranscriptionUseCase(db_service=DbService(), file_service=FileService())
+favorite_transcription_use_case = FavoriteTranscriptionUseCase(db_service=DbService())
 
 
 @data_bp.route('/user', methods=['GET'])
@@ -60,6 +62,7 @@ def get_all_transcriptions():
             'language': transcription.language,
             'segments': json.loads(transcription.segments),
             'created_at': transcription.created_at.isoformat() + 'Z' if transcription.created_at else None,
+            'isFavorite': transcription.isFavorite,
             'summary': {
                 'transcription_id': transcription.summary.transcription_id,
                 'id': transcription.summary.id,
@@ -91,6 +94,7 @@ def get_last_transcriptions():
             'language': transcription.language,
             'segments': json.loads(transcription.segments),
             'created_at': transcription.created_at.isoformat() + 'Z' if transcription.created_at else None,
+            'isFavorite': transcription.isFavorite,
             'summary': {
                 'transcription_id': transcription.summary.transcription_id,
                 'id': transcription.summary.id,
@@ -122,6 +126,7 @@ def get_transcriptions_by_id(transcription_id):
             'language': transcription.language,
             'segments': json.loads(transcription.segments),
             'created_at': transcription.created_at.isoformat() + 'Z' if transcription.created_at else None,
+            'isFavorite': transcription.isFavorite,
             'summary': {
                 'transcription_id': transcription.summary.transcription_id,
                 'id': transcription.summary.id,
@@ -158,6 +163,7 @@ def update_transcription_name(transcription_id):
             'language': updated_transcription.language,
             'segments': json.loads(updated_transcription.segments),
             'created_at': updated_transcription.created_at.isoformat() + 'Z' if updated_transcription.created_at else None,
+            'isFavorite': updated_transcription.isFavorite,
             'summary': {
                 'transcription_id': updated_transcription.summary.transcription_id,
                 'id': updated_transcription.summary.id,
@@ -165,7 +171,7 @@ def update_transcription_name(transcription_id):
             } if updated_transcription.summary else None
         }), 200
     except ValueError as e:
-        return jsonify({"message": str(e)}), 404
+        return jsonify({"message": str(e)}), 400
 
 
 @data_bp.route('/transcriptions/<int:transcription_id>', methods=['DELETE'])
@@ -178,11 +184,41 @@ def delete_transcription(transcription_id):
         return jsonify({"message": "User not found"}), 404
 
     try:
-        # Pass both the DbService and FileService to the use case
         delete_transcription_use_case.execute(transcription_id=transcription_id)
         return '', 204
     except ValueError as e:
-        return jsonify({"message": str(e)}), 404
+        return jsonify({"message": str(e)}), 400
+
+
+@data_bp.route('/transcriptions/<int:transcription_id>/favorite', methods=['PUT'])
+@jwt_required()
+def favorite_transcription(transcription_id):
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    try:
+        updated_transcription = favorite_transcription_use_case.execute(transcription_id=transcription_id)
+
+        return jsonify({
+            'id': updated_transcription.id,
+            'audio_id': updated_transcription.audio_id,
+            'name': updated_transcription.name,
+            'text': updated_transcription.text,
+            'language': updated_transcription.language,
+            'segments': json.loads(updated_transcription.segments),
+            'created_at': updated_transcription.created_at.isoformat() + 'Z' if updated_transcription.created_at else None,
+            'isFavorite': updated_transcription.isFavorite,
+            'summary': {
+                'transcription_id': updated_transcription.summary.transcription_id,
+                'id': updated_transcription.summary.id,
+                'text': updated_transcription.summary.text
+            } if updated_transcription.summary else None
+        }), 200
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 400
 
 
 @data_bp.route('/audio-files/<audio_id>', methods=['GET'])
