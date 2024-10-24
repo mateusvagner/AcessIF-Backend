@@ -16,8 +16,8 @@ class FavoriteTranscriptionUseCase:
         if not transcription:
             raise ValueError(f"No transcription found with ID {transcription_id}")
 
-        # Update the 'isFavorite' property of the transcription to True
-        transcription.is_favorite = True
+        # Update the 'is_favorite' property of the transcription to inverse
+        transcription.is_favorite = not transcription.is_favorite
 
         # Save the updated transcription back to the database
         updated_transcription = self.db_service.update_transcription(transcription)
